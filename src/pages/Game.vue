@@ -13,20 +13,22 @@
         </div>
       </div>
     </header>
-    <h1>Game Started!</h1>  
-    <!-- <button @click="pauseGame" class="btn btn-warning btn-lg">Pause</button> -->
+    <h1>Game Started!</h1>
     
     <app-game-pause v-if="isPaused" @gameResumed="resumeGame" @gameRestarted="restartGame"></app-game-pause>
+    <app-game-result v-if="hasEnded" :level="level" @gameRestarted="restartGame"></app-game-result>
   </main>  
 </template>
 
 <script>
 import GamePause from '../components/GamePause.vue';
+import GameResult from '../components/GameResult.vue';
 
 export default {
   data() {
     return {
       isPaused: false,
+      hasEnded: false,
       time: 10,
       level: 1,
       gridNumber: 2,   // start from 2x2
@@ -34,7 +36,8 @@ export default {
     };
   },
   components: {
-    appGamePause: GamePause
+    appGamePause: GamePause,
+    appGameResult: GameResult
   },
   mounted() {
     this.countDown();
@@ -50,6 +53,7 @@ export default {
     },
     restartGame() {
       this.isPaused = false;
+      this.hasEnded = false;
       this.dataReset();
       this.countDown();
     },
@@ -64,6 +68,7 @@ export default {
     },
     finish() {
       alert(`Time's Up! You passed ${ this.level - 1 } levels!`);
+      this.hasEnded = true;
       this.dataReset();
     },
     dataReset() {

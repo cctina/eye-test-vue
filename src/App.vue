@@ -58,6 +58,10 @@ a {
   color: #42b983;
 }
 
+.btn {
+  cursor: pointer;
+}
+
 .header {
   margin-bottom: 40px;
 }
