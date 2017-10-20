@@ -1,27 +1,32 @@
 <template>
-  <div class="container">
-    <app-entry></app-entry>  
-  </div>
+  <main>
+    <!-- <div class="container"> -->
+      <header class="header">
+        <h1>色弱測試</h1>
+        <h1>Color Sensitivity Test</h1>
+      </header>
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-primary btn-lg">Start</button>    
+        </div>
+      </div>
+    <!-- </div> -->
+  </main>
 </template>
 
 <script>
-import Entry from './pages/Entry.vue';
-
 export default {
-  // name: 'app',
+  name: 'entry',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
-  },
-  components: {
-    appEntry: Entry
   }
 }
 </script>
 
 <style lang="scss">
-#app {
+main {
   font-family: 'Montserrat', "source-han-sans-traditional", sans-serif;
   font-style: normal;
   font-weight: 400; // han-sans-trad
