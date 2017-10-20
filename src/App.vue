@@ -1,21 +1,29 @@
 <template>
   <div class="container">
-    <app-entry></app-entry>  
+    <app-entry v-show="!isGameStarted" @gameStarted="gameStarted"></app-entry>
+    <app-game v-show="isGameStarted"></app-game>
   </div>
 </template>
 
 <script>
 import Entry from './pages/Entry.vue';
+import Game from './pages/Game.vue';
 
 export default {
   // name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      isGameStarted: false
     }
   },
   components: {
-    appEntry: Entry
+    appEntry: Entry,
+    appGame: Game
+  },
+  methods: {
+    gameStarted() {
+      this.isGameStarted = true;
+    }
   }
 }
 </script>

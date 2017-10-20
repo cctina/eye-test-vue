@@ -7,7 +7,7 @@
       </header>
       <div class="row">
         <div class="col">
-          <button class="btn btn-primary btn-lg">Start</button>    
+          <button @click="startGame" class="btn btn-primary btn-lg">Start</button>    
         </div>
       </div>
     <!-- </div> -->
@@ -21,11 +21,16 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  methods: {
+    startGame() {
+      this.$emit('gameStarted');
+    }
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 main {
   font-family: 'Montserrat', "source-han-sans-traditional", sans-serif;
   font-style: normal;
