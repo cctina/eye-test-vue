@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <app-entry v-show="!isGameStarted" @gameStarted="gameStarted"></app-entry>
-    <app-game v-show="isGameStarted"></app-game>
+    <app-entry v-if="!isGameStarted" @gameStarted="gameStarted"></app-entry>
+    <app-game v-else></app-game>
   </div>
 </template>
 
