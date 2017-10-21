@@ -13,7 +13,7 @@
         </div>
       </div>
     </header>
-    <h1>Game Started!</h1>
+    <app-game-panel :gridSize="gridSize" @levelup="gotoNextLevel"></app-game-panel>
     
     <app-game-pause v-if="isPaused" @gameResumed="resumeGame" @gameRestarted="restartGame"></app-game-pause>
     <app-game-result v-if="hasEnded" :level="level" @gameRestarted="restartGame"></app-game-result>
@@ -23,21 +23,31 @@
 <script>
 import GamePause from '../components/GamePause.vue';
 import GameResult from '../components/GameResult.vue';
+import GamePanel from '../components/GamePanel.vue';
+const gameDefaultValues = {
+  isPaused: false,
+  hasEnded: false,
+  time: 5,
+  level: 1,
+  gridSize: 2,   // start from 2x2
+  timerId: ''
+}
 
 export default {
   data() {
     return {
-      isPaused: false,
-      hasEnded: false,
-      time: 10,
-      level: 1,
-      gridNumber: 2,   // start from 2x2
-      timerId: ''
+      isPaused: gameDefaultValues.isPaused,
+      hasEnded: gameDefaultValues.hasEnded,
+      time: gameDefaultValues.time,
+      level: gameDefaultValues.level,
+      gridSize: gameDefaultValues.gridSize,
+      timerId: gameDefaultValues.timerId
     };
   },
   components: {
     appGamePause: GamePause,
-    appGameResult: GameResult
+    appGameResult: GameResult,
+    appGamePanel: GamePanel
   },
   mounted() {
     this.countDown();
@@ -57,6 +67,10 @@ export default {
       this.dataReset();
       this.countDown();
     },
+    gotoNextLevel() {
+      this.level += 1;
+      this.gridSize += 1;
+    },
     countDown() {
       var vm = this;
       this.timerId = setInterval(function () {
@@ -72,11 +86,11 @@ export default {
       this.dataReset();
     },
     dataReset() {
-      this.isPaused = false;
-      this.time = 10;
-      this.level = 1,
-      this.gridNumber = 2;
-      this.timerId = '';
+      this.isPaused = gameDefaultValues.isPaused;
+      this.time = gameDefaultValues.time;
+      this.level = gameDefaultValues.level;
+      this.gridSize = gameDefaultValues.gridSize;
+      this.timerId = gameDefaultValues.timerId;
     }
   },
   watch: {

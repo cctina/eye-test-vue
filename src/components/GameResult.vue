@@ -3,7 +3,7 @@
     <div class="container">
       <header class="header">
         <h1>Result</h1>
-        <p>You are a level-{{ level - 1 }} color master!</p>
+        <p>You are a level-{{ passedLevel }} color master!</p>
       </header>
       <div class="row">
         <div class="col">
@@ -17,9 +17,17 @@
 <script>
   export default {
     props: [ 'level' ],
+    data() {
+      return {
+        passedLevel: this.computedLevel()
+      }
+    },
     methods: {
       restartGame() {
         this.$emit('gameRestarted');
+      },
+      computedLevel() {
+        return this.level - 1;
       }
     }
   }
