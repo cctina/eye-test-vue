@@ -27,7 +27,7 @@ import GamePanel from '../components/GamePanel.vue';
 const gameDefaultValues = {
   isPaused: false,
   hasEnded: false,
-  time: 5,
+  time: 60,
   level: 1,
   gridSize: 2,   // start from 2x2
   timerId: ''
@@ -83,7 +83,6 @@ export default {
     finish() {
       alert(`Time's Up! You passed ${ this.level - 1 } levels!`);
       this.hasEnded = true;
-      this.dataReset();
     },
     dataReset() {
       this.isPaused = gameDefaultValues.isPaused;

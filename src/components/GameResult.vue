@@ -17,16 +17,13 @@
 <script>
   export default {
     props: [ 'level' ],
-    data() {
-      return {
-        passedLevel: this.computedLevel()
-      }
-    },
     methods: {
       restartGame() {
         this.$emit('gameRestarted');
-      },
-      computedLevel() {
+      }
+    },
+    computed: {
+      passedLevel() {
         return this.level - 1;
       }
     }
