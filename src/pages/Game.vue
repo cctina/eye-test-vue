@@ -13,7 +13,7 @@
         </div>
       </div>
     </header>
-    <app-game-panel :gridSize="gridSize" @levelup="gotoNextLevel"></app-game-panel>
+    <app-game-panel :level="level" :gridSize="gridSize" @levelup="gotoNextLevel"></app-game-panel>
     
     <app-game-pause v-if="isPaused" @gameResumed="resumeGame" @gameRestarted="restartGame"></app-game-pause>
     <app-game-result v-if="hasEnded" :level="level" @gameRestarted="restartGame"></app-game-result>
