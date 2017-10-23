@@ -13,12 +13,11 @@
     data() {
       return {
         targetCol: 0,
-        targetRow: 0
+        targetRow: 0,
       };
     },
     mounted() {
-      this.setPanel(this.gridSize, this.totalBricks);
-      this.setTargetItem(this.gridSize);
+      this.refreshPanel();
     },
     computed: {
       totalBricks() {
@@ -28,6 +27,11 @@
     methods: {
       nextLevel() {
         this.$emit('levelup');
+      },
+      refreshPanel() {
+        this.setPanel(this.gridSize, this.totalBricks);
+        this.setTargetItem(this.gridSize);
+        this.setTargetClickListener();
       },
       setPanel(size, totalBricks) {
         this.setGridSize(size);
@@ -39,6 +43,7 @@
       setGridItems(totalBricks) {
         var panel = this.$refs.panel;
         // remove old elements
+        this.removeTargetClickListener();
         while (panel.firstChild) {
           panel.removeChild(panel.firstChild);
         }
@@ -47,10 +52,11 @@
         }
         // add new elements
         for (var i = 0; i < totalBricks; i++) {
-          let brick = document.createElement('div');
+          var brick = document.createElement('div');
           brick.classList.add('brick');
           if (i === 0) {
-            brick.classList.add('brick-target');
+            brick.classList.add('brick-target');  // become the target element
+            brick.id = 'target';
           }
           panel.append(brick);
         }
@@ -60,12 +66,28 @@
         this.targetRow = Math.round(Math.random() * (size - 1)) + 1;
         document.documentElement.style.setProperty("--grid-start-column", this.targetCol);
         document.documentElement.style.setProperty("--grid-start-row", this.targetRow);
+      },
+      setTargetClickListener() {
+        var targetEl = document.getElementById('target');
+        if (!targetEl) {
+          return;
+        }
+        targetEl.addEventListener('click', this.handleBrickClick);
+      },
+      removeTargetClickListener() {
+        var targetEl = document.getElementById('target');
+        if (!targetEl) {
+          return;
+        }
+        targetEl.removeEventListener('click', this.handleBrickClick);
+      },
+      handleBrickClick() {
+        this.nextLevel();
       }
     },
     watch: {
       level() {
-        this.setPanel(this.gridSize, this.totalBricks);
-        this.setTargetItem(this.gridSize);
+        this.refreshPanel();
       }
     }
   }
@@ -94,6 +116,7 @@
   .brick {
     border-radius: 5px;
     background-color: var(--brick-color);
+    cursor: pointer;
   }
   .brick-target {
     @extend .brick;
